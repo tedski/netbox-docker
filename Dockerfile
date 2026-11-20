@@ -2,6 +2,7 @@ FROM netboxcommunity/netbox:latest
 
 COPY plugin_requirements.txt /opt/netbox/
 RUN /usr/local/bin/uv pip install --no-cache -r /opt/netbox/plugin_requirements.txt
+RUN /usr/local/bin/uv pip install --upgrade 'social-auth-core[openidconnect]'
 
 # Build-time + standalone: enable the plugin so collectstatic gathers its
 # static files, and so users running without a config volume get a working
