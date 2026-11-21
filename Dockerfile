@@ -9,5 +9,10 @@ RUN /usr/local/bin/uv pip install --no-cache -r /opt/netbox/plugin_requirements.
 # /etc/netbox/config that shadows this file — keep both plugins.py lists
 # in sync (repo's configuration/plugins.py and Ansible's files/plugins.py).
 COPY configuration/plugins.py /etc/netbox/config/plugins.py
+
+# authentik social-auth pipeline: sync netbox groups and superuser status
+# from the OIDC groups claim on login.
+# https://integrations.goauthentik.io/documentation/netbox/
+COPY configuration/custom_pipeline.py /opt/netbox/netbox/netbox/custom_pipeline.py
 RUN DEBUG="true" SECRET_KEY="dummydummydummydummydummydummydummydummydummydummy" \
     /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py collectstatic --no-input
